@@ -8,6 +8,6 @@ const CONFIG = Object.freeze({
     const isLocal = ['localhost', '127.0.0.1'].includes(window.location.hostname);
     return isLocal
       ? 'http://localhost:5000/api/v1'
-      : 'https://the-knight-club-backend.onrender.com/api/v1';
+      : 'https://api.thenightclub.example/api/v1'; // placeholder production URL
   })(),
 });
