@@ -1,0 +1,117 @@
+/* ==========================================================================
+   THE NIGHT CLUB — Super Admin Dashboard (Phase 24)
+   Reuses .card, .table, .state-box, .badge, .stat-card from
+   base.css/courses.css/coupons.css — this file only adds the
+   dashboard-specific grid/list layout.
+   ========================================================================== */
+
+.dashboard-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.dashboard-sections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+
+/* Grid items default to min-width:auto, so a wide table inside a card can
+   force the whole grid track wider than the viewport even once the grid
+   itself has collapsed to one column below. Letting the card shrink below
+   its content's intrinsic width is what lets .table-wrap's own
+   overflow-x:auto take over instead of pushing the page out sideways. */
+.dashboard-sections > .card {
+  min-width: 0;
+}
+
+.dashboard-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.dashboard-section-title h2 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+
+.dashboard-section-title a {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.activity-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+}
+
+.activity-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.activity-label {
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.activity-time {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.activity-meta {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.dashboard-section .table td,
+.dashboard-section .table th {
+  padding: var(--space-2) var(--space-3);
+}
+
+.dashboard-section .state-box {
+  padding: var(--space-6) var(--space-4);
+}
+
+.dashboard-error-note {
+  font-size: var(--font-size-sm);
+  color: var(--color-error-text);
+  margin-top: var(--space-2);
+}
+
+@media (max-width: 960px) {
+  .dashboard-sections {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stat cards: 11rem minimum is too wide to fit 2-up on small phones
+   (2 x 176px + gap + shell padding overflows a 320-390px viewport) —
+   collapse to a single column below 480px so cards stay full-width
+   and readable instead of clipping off-screen. */
+@media (max-width: 480px) {
+  .dashboard-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

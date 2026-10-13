@@ -1,0 +1,48 @@
+/* ==========================================================================
+   THE NIGHT CLUB — Super Admin: Order & Payment Management (Phase 20)
+   Tokens only (tokens.css); reuses .filters/.table/.state-box/.pager/.card/
+   .badge/.detail-grid/.stat-grid from courses.css/coupons.css/base.css.
+   ========================================================================== */
+
+/* ---- List filters (search + status + course + date + sort, same shape as
+   coupons.css .filters-coupons) ---- */
+.filters.filters-orders { grid-template-columns: 2fr repeat(3, 1fr) auto; align-items: center; }
+@media (max-width: 1100px) { .filters.filters-orders { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 720px) { .filters.filters-orders { grid-template-columns: 1fr; } }
+
+/* ---- Payment status badges — the REAL Payment.status enum, never an
+   invented UI-only status (spec Step 4-5, 11, 20). ---- */
+.badge-payment-created { background: var(--color-warning-bg); color: var(--color-warning-text); }
+.badge-payment-authorized { background: var(--color-accent-50); color: var(--color-accent-700); }
+.badge-payment-captured { background: var(--color-success-bg); color: var(--color-success-text); }
+.badge-payment-failed { background: var(--color-error-bg); color: var(--color-error-text); }
+.badge-payment-cancelled { background: var(--color-surface-sunken); color: var(--color-text-muted); }
+.badge-payment-expired { background: var(--color-surface-sunken); color: var(--color-text-muted); }
+
+/* ---- Order id / Razorpay id cells ---- */
+.order-id { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.8125rem; }
+.order-amount { font-variant-numeric: tabular-nums; }
+.order-amount-final { font-weight: 600; }
+.order-amount-discount { color: var(--color-text-muted); font-size: 0.8125rem; }
+
+/* ---- Totals strip (details-free dashboard summary, spec Step 15) ---- */
+.order-totals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6); }
+
+/* ---- Order details page ---- */
+.order-section-title { margin: var(--space-6) 0 var(--space-3); }
+.order-section-title:first-child { margin-top: 0; }
+.razorpay-id-row { display: flex; align-items: center; gap: var(--space-2); }
+.razorpay-id-row .order-id { word-break: break-all; }
+
+.failure-box { background: var(--color-error-bg); color: var(--color-error-text); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4); font-size: var(--font-size-sm); }
+
+@media (max-width: 720px) {
+  .detail-grid { grid-template-columns: 1fr; }
+}
+
+/* 10rem minimum is too wide to fit 2-up on small phones (2 x 160px + gap +
+   shell padding overflows a 320-390px viewport) — collapse to a single
+   column below 480px so totals stay full-width instead of clipping. */
+@media (max-width: 480px) {
+  .order-totals-grid { grid-template-columns: 1fr; }
+}

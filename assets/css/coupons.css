@@ -1,0 +1,95 @@
+/* ==========================================================================
+   THE NIGHT CLUB — Super Admin: Coupon management (Phase 19)
+   Tokens only (tokens.css); reuses .filters/.table/.state-box/.pager/.card/
+   .badge/.field/.form-grid/.form-row/.modal from courses.css and base.css.
+   ========================================================================== */
+
+/* ---- List filters (search + 3 selects + reset, same shape as courses.css .filters) ---- */
+.filters.filters-coupons { grid-template-columns: 2fr repeat(3, 1fr) auto; align-items: center; }
+@media (max-width: 1100px) { .filters.filters-coupons { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 720px) { .filters.filters-coupons { grid-template-columns: 1fr; } }
+
+/* 11rem minimum is too wide to fit 2-up on small phones (2 x 176px + gap +
+   shell padding overflows a 320-390px viewport) — collapse to a single
+   column below 480px so stat cards stay full-width instead of clipping. */
+@media (max-width: 480px) {
+  .stat-grid { grid-template-columns: 1fr; }
+}
+
+/* ---- Derived effective-state badges (spec Step 4: distinct from raw ACTIVE/INACTIVE) ---- */
+.badge-coupon-active { background: var(--color-success-bg); color: var(--color-success-text); }
+.badge-coupon-inactive { background: var(--color-surface-sunken); color: var(--color-text-muted); }
+.badge-coupon-scheduled { background: var(--color-warning-bg); color: var(--color-warning-text); }
+.badge-coupon-expired { background: var(--color-error-bg); color: var(--color-error-text); }
+.badge-coupon-usage-limit-reached { background: var(--color-error-bg); color: var(--color-error-text); }
+
+/* ---- Discount cell ---- */
+.coupon-discount { font-variant-numeric: tabular-nums; }
+.coupon-code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-weight: 600; letter-spacing: 0.02em; }
+.coupon-code-row { display: flex; align-items: center; gap: var(--space-2); }
+.coupon-copy-btn { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+
+/* ---- Details page: summary stat cards ---- */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6); }
+.stat-card {
+  position: relative;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  overflow: hidden;
+  transition: box-shadow var(--duration-base) var(--ease-standard),
+              transform var(--duration-base) var(--ease-standard);
+}
+/* Thin gradient accent bar — a restrained cinematic touch on every stat
+   card, rather than a heavy gradient fill across all of them. */
+.stat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--gradient-primary);
+}
+.stat-card .stat-label { font-size: 0.75rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: var(--space-2); }
+.stat-card .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--color-text); }
+.stat-card .stat-sub { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: var(--space-1); }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+}
+
+/* ---- Details page: definition list of coupon fields ---- */
+.detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: var(--space-4) var(--space-6); }
+.detail-item dt { font-size: 0.75rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: var(--space-1); }
+.detail-item dd { margin: 0; font-size: var(--font-size-base); color: var(--color-text); }
+
+/* ---- Usage progress bar ---- */
+.usage-bar-track { height: 0.5rem; border-radius: 999px; background: var(--color-surface-sunken); overflow: hidden; margin-top: var(--space-2); }
+.usage-bar-fill { height: 100%; background: var(--gradient-primary); border-radius: inherit; transition: width var(--duration-base) var(--ease-standard); }
+.usage-bar-fill.is-full { background: var(--color-error-text); }
+
+/* ---- By-course usage table (details page) ---- */
+.usage-course-table td, .usage-course-table th { padding: var(--space-2) var(--space-3); }
+
+/* ---- Course multi-select picker (create/edit form) ---- */
+.course-picker { border: 1px solid var(--color-border); border-radius: var(--radius-md); max-height: 14rem; overflow-y: auto; padding: var(--space-2); }
+.course-picker-row { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-2); border-radius: 0.375rem; }
+.course-picker-row:hover { background: var(--color-accent-50); }
+.course-picker-row label { flex: 1; cursor: pointer; display: flex; flex-direction: column; }
+.course-picker-row .cell-sub { font-size: 0.75rem; }
+.course-picker-empty { padding: var(--space-4); text-align: center; color: var(--color-text-muted); font-size: var(--font-size-sm); }
+.course-picker-summary { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: var(--space-2); }
+.scope-toggle { display: flex; gap: var(--space-4); align-items: center; margin-bottom: var(--space-3); }
+.scope-toggle label { display: flex; align-items: center; gap: var(--space-2); font-weight: 500; cursor: pointer; }
+
+/* ---- Money input prefix (₹) ---- */
+.money-field { position: relative; }
+.money-field .input { padding-left: 1.75rem; }
+.money-field::before { content: "\20B9"; position: absolute; left: 0.7rem; top: 50%; transform: translateY(-50%); color: var(--color-text-muted); pointer-events: none; }
+.money-field.has-label::before { top: calc(50% + 0.05rem); }
+
+.field-hint-row { display: flex; justify-content: space-between; gap: var(--space-2); }
+
+@media (prefers-reduced-motion: reduce) {
+  .usage-bar-fill { transition: none; }
+}

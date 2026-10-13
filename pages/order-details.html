@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order details — The Night Club Super Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/auth.css" />
+  <link rel="stylesheet" href="../assets/css/courses.css" />
+  <link rel="stylesheet" href="../assets/css/coupons.css" />
+  <link rel="stylesheet" href="../assets/css/orders.css" />
+  <style>html.auth-pending body { visibility: hidden; }</style>
+  <script>document.documentElement.classList.add('auth-pending');</script>
+  <noscript><style>html.auth-pending body { visibility: visible; }</style></noscript>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">The <span>Night Club</span></div>
+      <nav aria-label="Admin modules">
+        <a href="../index.html">Dashboard</a>
+        <a href="courses.html">Courses</a>
+        <a href="categories.html">Categories</a>
+        <a href="instructors.html">Instructors</a>
+        <a href="students.html">Students</a>
+        <a href="enrollments.html">Enrollments</a>
+        <a href="orders.html" class="active" aria-current="page">Orders</a>
+        <a href="leads.html">Leads</a>
+        <span class="nav-disabled" aria-disabled="true">Payments</span>
+        <a href="coupons.html">Coupons</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="membership.html">1% Club</a>
+        <a href="placeholders.html">Placeholders</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <span></span>
+        <div class="topbar-right">
+          <span id="admin-identity" class="admin-identity"></span>
+          <span id="admin-role" class="badge badge-role"></span>
+          <button type="button" id="logout-btn" class="btn btn-outline btn-sm">Sign out</button>
+        </div>
+      </div>
+
+      <div class="page-head">
+        <h1 id="page-title">Order</h1>
+        <div class="table-actions">
+          <a href="orders.html" class="btn btn-outline btn-sm">Back to orders</a>
+        </div>
+      </div>
+
+      <div id="page-alert" class="alert" role="alert" tabindex="-1" hidden></div>
+      <div id="load-state" class="state-box" hidden></div>
+
+      <div id="content" hidden>
+        <h3 class="order-section-title">Order information</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Order ID</dt><dd class="order-id" id="d-id"></dd></div>
+            <div class="detail-item"><dt>Status</dt><dd id="d-status"></dd></div>
+            <div class="detail-item"><dt>Created</dt><dd id="d-created"></dd></div>
+            <div class="detail-item"><dt>Last updated</dt><dd id="d-updated"></dd></div>
+          </div>
+        </div>
+
+        <h3 class="order-section-title">Student</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Name</dt><dd id="d-student-name"></dd></div>
+            <div class="detail-item"><dt>Student ID</dt><dd id="d-student-id"></dd></div>
+          </div>
+        </div>
+
+        <h3 class="order-section-title">Course</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Title</dt><dd id="d-course-title"></dd></div>
+            <div class="detail-item"><dt>Course ID</dt><dd id="d-course-id"></dd></div>
+          </div>
+        </div>
+
+        <h3 class="order-section-title">Financial breakdown</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Original amount</dt><dd id="d-original-amount"></dd></div>
+            <div class="detail-item"><dt>Discount</dt><dd id="d-discount"></dd></div>
+            <div class="detail-item"><dt>Coupon</dt><dd id="d-coupon"></dd></div>
+            <div class="detail-item"><dt>Final amount</dt><dd id="d-final-amount"></dd></div>
+            <div class="detail-item"><dt>Currency</dt><dd id="d-currency"></dd></div>
+          </div>
+        </div>
+
+        <h3 class="order-section-title">Payment</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Razorpay order ID</dt><dd class="razorpay-id-row"><span class="order-id" id="d-rzp-order"></span></dd></div>
+            <div class="detail-item"><dt>Razorpay payment ID</dt><dd class="razorpay-id-row"><span class="order-id" id="d-rzp-payment"></span></dd></div>
+            <div class="detail-item"><dt>Signature verified</dt><dd id="d-signature-verified"></dd></div>
+            <div class="detail-item"><dt>Payment status</dt><dd id="d-payment-status"></dd></div>
+            <div class="detail-item"><dt>Authorized at</dt><dd id="d-authorized-at"></dd></div>
+            <div class="detail-item"><dt>Captured at</dt><dd id="d-captured-at"></dd></div>
+            <div class="detail-item"><dt>Expires at</dt><dd id="d-expires-at"></dd></div>
+            <div class="detail-item"><dt>Webhook events processed</dt><dd id="d-webhook-events"></dd></div>
+          </div>
+          <div id="failure-box" class="failure-box" hidden style="margin-top: var(--space-4);"></div>
+        </div>
+
+        <h3 class="order-section-title">Enrollment</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Status</dt><dd id="d-enrollment-status"></dd></div>
+            <div class="detail-item"><dt>Enrolled at</dt><dd id="d-enrolled-at"></dd></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/forms.js"></script>
+  <script src="../assets/js/dom.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/orders-api.js"></script>
+  <script src="../assets/js/order-details.js"></script>
+</body>
+</html>

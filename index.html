@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Night Club — Super Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="assets/css/tokens.css" />
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/auth.css" />
+  <link rel="stylesheet" href="assets/css/courses.css" />
+  <link rel="stylesheet" href="assets/css/coupons.css" />
+  <link rel="stylesheet" href="assets/css/orders.css" />
+  <link rel="stylesheet" href="assets/css/dashboard.css" />
+  <!-- PROTECTED SHELL. Hidden until the SERVER confirms an administrator
+       session, so an unauthenticated visitor never sees a flash of admin UI.
+       (The <noscript> rule below keeps the page from being a blank screen
+       when scripts are off; no admin data is ever in this HTML — the API
+       refuses every call without a session — so showing the empty shell
+       exposes nothing.) -->
+  <style>html.auth-pending body { visibility: hidden; }</style>
+  <script>document.documentElement.classList.add('auth-pending');</script>
+  <noscript><style>html.auth-pending body { visibility: visible; }</style></noscript>
+</head>
+<body>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">The <span>Night Club</span></div>
+      <nav aria-label="Admin modules">
+        <a href="index.html" class="active" aria-current="page">Dashboard</a>
+        <a href="pages/courses.html">Courses</a>
+        <!-- Modules that arrive in later phases: shown, but inert. -->
+        <a href="pages/categories.html">Categories</a>
+        <a href="pages/instructors.html">Instructors</a>
+        <a href="pages/students.html">Students</a>
+        <a href="pages/enrollments.html">Enrollments</a>
+        <a href="pages/orders.html">Orders</a>
+        <a href="pages/leads.html">Leads</a>
+        <span class="nav-disabled" aria-disabled="true">Payments</span>
+        <a href="pages/coupons.html">Coupons</a>
+        <a href="pages/analytics.html">Analytics</a>
+        <a href="pages/membership.html">1% Club</a>
+        <a href="pages/placeholders.html">Placeholders</a>
+        <a href="pages/settings.html">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <h1 style="margin:0;">Dashboard</h1>
+        <div class="topbar-right">
+          <span id="admin-identity" class="admin-identity"></span>
+          <span id="admin-role" class="badge badge-role"></span>
+          <button type="button" id="logout-btn" class="btn btn-outline btn-sm">Sign out</button>
+        </div>
+      </div>
+
+      <div id="page-alert" class="alert" role="alert" tabindex="-1" hidden></div>
+
+      <!-- ---- Summary statistics (spec Sections 1-8) ---- -->
+      <div class="dashboard-stats-grid" id="stats-grid" aria-live="polite"></div>
+
+      <!-- ---- Recent sections (spec Sections 9-12) ---- -->
+      <div class="dashboard-sections">
+
+        <section class="card dashboard-section">
+          <div class="dashboard-section-title">
+            <h2>Recent students</h2>
+            <a href="pages/students.html">View all</a>
+          </div>
+          <div class="table-wrap">
+            <table class="table" aria-label="Recent students">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">User ID</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Joined</th>
+                </tr>
+              </thead>
+              <tbody id="recent-students-body"></tbody>
+            </table>
+          </div>
+          <div id="recent-students-state" class="state-box" hidden></div>
+        </section>
+
+        <section class="card dashboard-section">
+          <div class="dashboard-section-title">
+            <h2>Recent orders</h2>
+            <a href="pages/orders.html">View all</a>
+          </div>
+          <div class="table-wrap">
+            <table class="table" aria-label="Recent orders">
+              <thead>
+                <tr>
+                  <th scope="col">Student</th>
+                  <th scope="col">Course</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody id="recent-orders-body"></tbody>
+            </table>
+          </div>
+          <div id="recent-orders-state" class="state-box" hidden></div>
+        </section>
+
+        <section class="card dashboard-section">
+          <div class="dashboard-section-title">
+            <h2>Recent enrollments</h2>
+            <a href="pages/enrollments.html">View all</a>
+          </div>
+          <div class="table-wrap">
+            <table class="table" aria-label="Recent enrollments">
+              <thead>
+                <tr>
+                  <th scope="col">Student</th>
+                  <th scope="col">Course</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Enrolled</th>
+                </tr>
+              </thead>
+              <tbody id="recent-enrollments-body"></tbody>
+            </table>
+          </div>
+          <div id="recent-enrollments-state" class="state-box" hidden></div>
+        </section>
+
+        <section class="card dashboard-section">
+          <div class="dashboard-section-title">
+            <h2>Recent activity</h2>
+          </div>
+          <ul class="activity-list" id="recent-activity-list" aria-label="Recent admin activity"></ul>
+          <div id="recent-activity-state" class="state-box" hidden></div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/forms.js"></script>
+  <script src="assets/js/dom.js"></script>
+  <script src="assets/js/ui.js"></script>
+  <script src="assets/js/dashboard-api.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

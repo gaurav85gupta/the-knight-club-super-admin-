@@ -1,0 +1,96 @@
+/* ==========================================================================
+   THE NIGHT CLUB — Super Admin: Analytics & Intelligence (Phase 25)
+   Tokens only (tokens.css); reuses .card/.table/.state-box/.filters/
+   .stat-card/.badge/.btn/.input from base.css/courses.css/coupons.css.
+   This file only adds: section tabs, chart containers, and the simple
+   inline-SVG line/bar chart primitives used across every analytics section.
+   No charting library is introduced (spec Step 49 — vanilla JS only).
+   ========================================================================== */
+
+.analytics-tabs {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.analytics-tab {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  margin-bottom: -1px;
+}
+
+.analytics-tab { transition: color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard); }
+.analytics-tab:hover { color: var(--color-text); }
+
+.analytics-tab.active {
+  color: var(--color-accent-600);
+  border-bottom: 2px solid transparent;
+  border-image: var(--gradient-primary) 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .analytics-tab { transition: none; }
+}
+
+.analytics-panel[hidden] { display: none; }
+
+.analytics-section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.analytics-card h2 {
+  font-size: var(--font-size-lg);
+  margin: 0 0 var(--space-1);
+}
+
+.analytics-card .analytics-card-sub {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-4);
+}
+
+.analytics-card.full-width { grid-column: 1 / -1; }
+
+/* ---- Chart primitives (plain inline SVG — no vendor library) ---- */
+.chart-wrap { overflow-x: auto; }
+.chart-svg { display: block; width: 100%; height: auto; min-width: 420px; }
+.chart-bar { fill: var(--color-accent-500); }
+.chart-bar:hover { fill: var(--color-accent-600); }
+.chart-line-path { fill: none; stroke: var(--color-accent-500); stroke-width: 2; }
+.chart-line-dot { fill: var(--color-accent-500); }
+.chart-axis-label { font-size: 10px; fill: var(--color-text-muted); }
+.chart-grid-line { stroke: var(--color-border); stroke-width: 1; }
+.chart-value-label { font-size: 10px; fill: var(--color-text-muted); text-anchor: middle; }
+.chart-bar-group:hover .chart-value-label { fill: var(--color-text); font-weight: 600; }
+
+/* Accessible exact-value tables next to every chart (spec Step 24-25, 53) */
+.chart-table-toggle { font-size: var(--font-size-sm); margin-top: var(--space-2); }
+
+.definition-note {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.progress-distribution { display: flex; flex-direction: column; gap: var(--space-2); }
+.progress-distribution-row { display: grid; grid-template-columns: 5rem 1fr 3rem; align-items: center; gap: var(--space-3); font-size: var(--font-size-sm); }
+.progress-distribution-bar-track { background: var(--color-surface-alt); border-radius: var(--radius-full); height: 0.6rem; overflow: hidden; }
+.progress-distribution-bar-fill { background: var(--gradient-primary); height: 100%; }
+
+@media (max-width: 720px) {
+  .filters.filters-analytics { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student details — The Night Club Super Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/auth.css" />
+  <link rel="stylesheet" href="../assets/css/courses.css" />
+  <link rel="stylesheet" href="../assets/css/coupons.css" />
+  <link rel="stylesheet" href="../assets/css/orders.css" />
+  <link rel="stylesheet" href="../assets/css/students.css" />
+  <style>html.auth-pending body { visibility: hidden; }</style>
+  <script>document.documentElement.classList.add('auth-pending');</script>
+  <noscript><style>html.auth-pending body { visibility: visible; }</style></noscript>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">The <span>Night Club</span></div>
+      <nav aria-label="Admin modules">
+        <a href="../index.html">Dashboard</a>
+        <a href="courses.html">Courses</a>
+        <a href="categories.html">Categories</a>
+        <a href="instructors.html">Instructors</a>
+        <a href="students.html" class="active" aria-current="page">Students</a>
+        <a href="enrollments.html">Enrollments</a>
+        <a href="orders.html">Orders</a>
+        <a href="leads.html">Leads</a>
+        <span class="nav-disabled" aria-disabled="true">Payments</span>
+        <a href="coupons.html">Coupons</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="membership.html">1% Club</a>
+        <a href="placeholders.html">Placeholders</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <span></span>
+        <div class="topbar-right">
+          <span id="admin-identity" class="admin-identity"></span>
+          <span id="admin-role" class="badge badge-role"></span>
+          <button type="button" id="logout-btn" class="btn btn-outline btn-sm">Sign out</button>
+        </div>
+      </div>
+
+      <div class="page-head">
+        <h1 id="page-title">Student</h1>
+        <div class="table-actions">
+          <a href="students.html" class="btn btn-outline btn-sm">Back to students</a>
+          <button type="button" id="activate-btn" class="btn btn-primary btn-sm" hidden>Activate</button>
+          <button type="button" id="suspend-btn" class="btn btn-danger-solid btn-sm" hidden>Suspend</button>
+          <button type="button" id="reset-password-btn" class="btn btn-outline btn-sm" hidden>Reset password</button>
+        </div>
+      </div>
+
+      <div id="page-alert" class="alert" role="alert" tabindex="-1" hidden></div>
+      <div id="load-state" class="state-box" hidden></div>
+
+      <div id="content" hidden>
+        <!-- STUDENT HEADER -->
+        <h3 class="order-section-title">Student information</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Full name</dt><dd id="d-name"></dd></div>
+            <div class="detail-item"><dt>Student ID</dt><dd class="order-id" id="d-userid"></dd></div>
+            <div class="detail-item"><dt>Mobile</dt><dd id="d-mobile"></dd></div>
+            <div class="detail-item"><dt>Date of birth</dt><dd id="d-dob"></dd></div>
+            <div class="detail-item"><dt>Gender</dt><dd id="d-gender"></dd></div>
+            <div class="detail-item"><dt>Address</dt><dd id="d-address"></dd></div>
+            <div class="detail-item"><dt>City</dt><dd id="d-city"></dd></div>
+            <div class="detail-item"><dt>State</dt><dd id="d-state"></dd></div>
+            <div class="detail-item"><dt>Pincode</dt><dd id="d-pincode"></dd></div>
+          </div>
+        </div>
+
+        <!-- ACCOUNT -->
+        <h3 class="order-section-title">Account</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Status</dt><dd id="d-status"></dd></div>
+            <div class="detail-item"><dt>Registered</dt><dd id="d-created"></dd></div>
+            <div class="detail-item"><dt>Last login</dt><dd id="d-last-login"></dd></div>
+          </div>
+        </div>
+
+        <!-- ENROLLMENTS -->
+        <h3 class="order-section-title">Enrollments</h3>
+        <div class="card">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Course</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Enrolled</th>
+                  <th scope="col">Completed</th>
+                </tr>
+              </thead>
+              <tbody id="enrollments-body"></tbody>
+            </table>
+          </div>
+          <div id="enrollments-empty" class="state-box" hidden></div>
+        </div>
+
+        <!-- PURCHASE HISTORY -->
+        <h3 class="order-section-title">Purchase history</h3>
+        <div class="card">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Order</th>
+                  <th scope="col">Course</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Coupon</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Date</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody id="orders-body"></tbody>
+            </table>
+          </div>
+          <div id="orders-empty" class="state-box" hidden></div>
+        </div>
+
+        <!-- LEARNING PROGRESS -->
+        <h3 class="order-section-title">Learning progress</h3>
+        <div class="card">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Course</th>
+                  <th scope="col">Progress</th>
+                  <th scope="col">Completed lessons</th>
+                  <th scope="col">Completion</th>
+                </tr>
+              </thead>
+              <tbody id="progress-body"></tbody>
+            </table>
+          </div>
+          <div id="progress-empty" class="state-box" hidden></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Password Reset Modal -->
+  <div id="reset-password-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="rp-modal-title" hidden>
+    <div class="modal">
+      <h3 id="rp-modal-title">Reset student password</h3>
+      <p id="rp-modal-desc" class="modal-desc"></p>
+      <div id="rp-modal-alert" class="alert" role="alert" tabindex="-1" hidden></div>
+      <div class="field">
+        <label for="rp-new-password">New password</label>
+        <input type="password" id="rp-new-password" autocomplete="new-password" minlength="8" maxlength="128" placeholder="Minimum 8 characters" />
+      </div>
+      <div class="field">
+        <label for="rp-confirm-password">Confirm new password</label>
+        <input type="password" id="rp-confirm-password" autocomplete="new-password" minlength="8" maxlength="128" placeholder="Re-enter new password" />
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="rp-cancel-btn" class="btn btn-outline btn-sm">Cancel</button>
+        <button type="button" id="rp-submit-btn" class="btn btn-danger-solid btn-sm">Reset password</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/forms.js"></script>
+  <script src="../assets/js/dom.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/students-api.js"></script>
+  <script src="../assets/js/student-details.js"></script>
+</body>
+</html>

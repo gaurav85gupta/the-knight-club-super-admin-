@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leads — The Night Club Super Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/auth.css" />
+  <link rel="stylesheet" href="../assets/css/courses.css" />
+  <link rel="stylesheet" href="../assets/css/coupons.css" />
+  <link rel="stylesheet" href="../assets/css/orders.css" />
+  <link rel="stylesheet" href="../assets/css/leads.css" />
+  <style>html.auth-pending body { visibility: hidden; }</style>
+  <script>document.documentElement.classList.add('auth-pending');</script>
+  <noscript><style>html.auth-pending body { visibility: visible; }</style></noscript>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">The <span>Night Club</span></div>
+      <nav aria-label="Admin modules">
+        <a href="../index.html">Dashboard</a>
+        <a href="courses.html">Courses</a>
+        <a href="categories.html">Categories</a>
+        <a href="instructors.html">Instructors</a>
+        <a href="students.html">Students</a>
+        <a href="enrollments.html">Enrollments</a>
+        <a href="orders.html">Orders</a>
+        <a href="leads.html" class="active" aria-current="page">Leads</a>
+        <span class="nav-disabled" aria-disabled="true">Payments</span>
+        <a href="coupons.html">Coupons</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="membership.html">1% Club</a>
+        <a href="placeholders.html">Placeholders</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <span></span>
+        <div class="topbar-right">
+          <span id="admin-identity" class="admin-identity"></span>
+          <span id="admin-role" class="badge badge-role"></span>
+          <button type="button" id="logout-btn" class="btn btn-outline btn-sm">Sign out</button>
+        </div>
+      </div>
+
+      <div class="page-head">
+        <div>
+          <h1>Leads</h1>
+          <p class="text-muted" style="margin: 0;">Manage and respond to website enquiries and course-related inquiries.</p>
+        </div>
+      </div>
+
+      <div id="page-alert" class="alert" role="alert" tabindex="-1" hidden></div>
+
+      <div class="card">
+        <div class="filters filters-leads" role="search">
+          <input class="input" id="f-search" type="search" placeholder="Search leads..." maxlength="100" aria-label="Search leads" />
+          <select class="input" id="f-status" aria-label="Filter by status">
+            <option value="">All</option>
+            <option value="new">New</option>
+            <option value="in-progress">In Progress</option>
+            <option value="resolved">Resolved</option>
+            <option value="spam">Spam</option>
+          </select>
+          <select class="input" id="f-enquiry-type" aria-label="Filter by enquiry type">
+            <option value="">All Enquiry Types</option>
+            <option value="general">General</option>
+            <option value="course">Course</option>
+            <option value="payment">Payment</option>
+            <option value="support">Support</option>
+            <option value="club">1% Club</option>
+            <option value="other">Other</option>
+          </select>
+          <button type="button" id="f-reset" class="btn btn-outline btn-sm">Reset filters</button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="table" id="leads-table" aria-busy="false">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Enquiry Type</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Course</th>
+                <th scope="col">Status</th>
+                <th scope="col">Last Contacted</th>
+                <th scope="col">Created</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody id="leads-body"></tbody>
+          </table>
+        </div>
+        <div id="state-box" class="state-box" hidden></div>
+
+        <div class="pager" id="pager" hidden>
+          <span id="pager-info"></span>
+          <div class="pager-buttons">
+            <button type="button" id="prev-btn" class="btn btn-outline btn-sm">Previous</button>
+            <span id="pager-page"></span>
+            <button type="button" id="next-btn" class="btn btn-outline btn-sm">Next</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/forms.js"></script>
+  <script src="../assets/js/dom.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/leads-api.js"></script>
+  <script src="../assets/js/leads-list.js"></script>
+</body>
+</html>

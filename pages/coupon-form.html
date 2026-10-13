@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coupon — The Night Club Super Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/auth.css" />
+  <link rel="stylesheet" href="../assets/css/courses.css" />
+  <link rel="stylesheet" href="../assets/css/coupons.css" />
+  <style>html.auth-pending body { visibility: hidden; }</style>
+  <script>document.documentElement.classList.add('auth-pending');</script>
+  <noscript><style>html.auth-pending body { visibility: visible; }</style></noscript>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">The <span>Night Club</span></div>
+      <nav aria-label="Admin modules">
+        <a href="../index.html">Dashboard</a>
+        <a href="courses.html">Courses</a>
+        <a href="categories.html">Categories</a>
+        <a href="instructors.html">Instructors</a>
+        <a href="students.html">Students</a>
+        <a href="enrollments.html">Enrollments</a>
+        <a href="orders.html">Orders</a>
+        <a href="leads.html">Leads</a>
+        <span class="nav-disabled" aria-disabled="true">Payments</span>
+        <a href="coupons.html" class="active" aria-current="page">Coupons</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="membership.html">1% Club</a>
+        <a href="placeholders.html">Placeholders</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <span></span>
+        <div class="topbar-right">
+          <span id="admin-identity" class="admin-identity"></span>
+          <span id="admin-role" class="badge badge-role"></span>
+          <button type="button" id="logout-btn" class="btn btn-outline btn-sm">Sign out</button>
+        </div>
+      </div>
+
+      <div class="page-head">
+        <h1 id="page-title">New coupon</h1>
+        <a href="coupons.html" id="back-link" class="btn btn-outline btn-sm">Back to coupons</a>
+      </div>
+
+      <div id="page-alert" class="alert" role="alert" tabindex="-1" hidden></div>
+      <div id="load-state" class="state-box" hidden></div>
+
+      <form id="coupon-form" novalidate autocomplete="off" hidden>
+
+        <section class="card form-section" aria-labelledby="sec-basic">
+          <h3 id="sec-basic">Coupon code</h3>
+          <p class="section-hint">Shown to students at checkout. Letters, digits, hyphen or underscore. Stored and compared in UPPERCASE.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="code">Code</label>
+              <input class="input" id="code" name="code" type="text" maxlength="40" required spellcheck="false" autocapitalize="characters" placeholder="e.g. DIWALI25" aria-describedby="code-hint code-error" />
+              <p class="hint" id="code-hint">3–40 characters. Cannot be changed after the coupon is created.</p>
+              <p class="field-error" id="code-error" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="description">Description (optional, admin-only)</label>
+              <input class="input" id="description" name="description" type="text" maxlength="300" placeholder="e.g. Diwali sale — Instagram campaign" aria-describedby="description-error" />
+              <p class="field-error" id="description-error" aria-live="polite"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card form-section" aria-labelledby="sec-discount">
+          <h3 id="sec-discount">Discount</h3>
+          <p class="section-hint">Percentage or a fixed rupee amount. A percentage coupon may optionally cap the maximum discount.</p>
+          <div class="form-row three">
+            <div class="field">
+              <label for="discountType">Discount type</label>
+              <select class="input" id="discountType" name="discountType" required aria-describedby="discountType-error">
+                <option value="PERCENTAGE">Percentage</option>
+                <option value="FIXED">Fixed amount</option>
+              </select>
+              <p class="field-error" id="discountType-error" aria-live="polite"></p>
+            </div>
+            <div class="field" id="field-percentage">
+              <label for="percentage">Percentage off</label>
+              <input class="input" id="percentage" name="percentage" type="text" inputmode="numeric" placeholder="e.g. 20" aria-describedby="percentage-error" />
+              <p class="field-error" id="percentage-error" aria-live="polite"></p>
+            </div>
+            <div class="field" id="field-fixedAmount" hidden>
+              <label for="fixedAmount">Fixed amount off (₹)</label>
+              <div class="money-field"><input class="input" id="fixedAmount" name="fixedAmount" type="text" inputmode="decimal" placeholder="0.00" aria-describedby="fixedAmount-error" /></div>
+              <p class="field-error" id="fixedAmount-error" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="form-row three" id="field-maxDiscountAmount-row">
+            <div class="field" id="field-maxDiscountAmount">
+              <label for="maxDiscountAmount">Maximum discount cap (₹, optional)</label>
+              <div class="money-field"><input class="input" id="maxDiscountAmount" name="maxDiscountAmount" type="text" inputmode="decimal" placeholder="No cap" aria-describedby="maxDiscountAmount-hint maxDiscountAmount-error" /></div>
+              <p class="hint" id="maxDiscountAmount-hint">Only applies to a percentage coupon. Leave blank for no cap.</p>
+              <p class="field-error" id="maxDiscountAmount-error" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="minOrderAmount">Minimum order amount (₹, optional)</label>
+              <div class="money-field"><input class="input" id="minOrderAmount" name="minOrderAmount" type="text" inputmode="decimal" placeholder="No minimum" aria-describedby="minOrderAmount-error" /></div>
+              <p class="field-error" id="minOrderAmount-error" aria-live="polite"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card form-section" aria-labelledby="sec-validity">
+          <h3 id="sec-validity">Validity window</h3>
+          <p class="section-hint">Leave both blank for a coupon with no time limit.</p>
+          <div class="form-row">
+            <div class="field">
+              <label for="startAt">Starts (optional)</label>
+              <input class="input" id="startAt" name="startAt" type="datetime-local" aria-describedby="startAt-error" />
+              <p class="field-error" id="startAt-error" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="endAt">Ends (optional)</label>
+              <input class="input" id="endAt" name="endAt" type="datetime-local" aria-describedby="endAt-error" />
+              <p class="field-error" id="endAt-error" aria-live="polite"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card form-section" aria-labelledby="sec-limits">
+          <h3 id="sec-limits">Usage limits</h3>
+          <p class="section-hint">Leave blank for unlimited. The used count itself is never editable here — it is tracked automatically by successful purchases.</p>
+          <div class="form-row">
+            <div class="field">
+              <label for="usageLimit">Total usage limit (optional)</label>
+              <input class="input" id="usageLimit" name="usageLimit" type="text" inputmode="numeric" placeholder="Unlimited" aria-describedby="usageLimit-error" />
+              <p class="field-error" id="usageLimit-error" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="perUserLimit">Per-student usage limit (optional)</label>
+              <input class="input" id="perUserLimit" name="perUserLimit" type="text" inputmode="numeric" placeholder="Unlimited" aria-describedby="perUserLimit-error" />
+              <p class="field-error" id="perUserLimit-error" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="field" id="usage-readout" hidden>
+            <label>Used so far</label>
+            <p class="cell-sub" id="usage-readout-text"></p>
+          </div>
+        </section>
+
+        <section class="card form-section" aria-labelledby="sec-scope">
+          <h3 id="sec-scope">Course eligibility</h3>
+          <p class="section-hint">A global coupon applies to any course. A course-specific coupon applies only to the courses you select.</p>
+          <div class="scope-toggle" role="radiogroup" aria-label="Coupon scope">
+            <label><input type="radio" name="scope" id="scope-global" value="GLOBAL" checked /> Global (any course)</label>
+            <label><input type="radio" name="scope" id="scope-course" value="COURSE_SPECIFIC" /> Course-specific</label>
+          </div>
+          <div class="field" id="course-picker-field" hidden>
+            <label id="course-picker-label">Applicable courses</label>
+            <div class="course-picker" id="course-picker" role="group" aria-labelledby="course-picker-label"></div>
+            <p class="course-picker-summary" id="course-picker-summary"></p>
+            <p class="field-error" id="courses-error" aria-live="polite"></p>
+          </div>
+        </section>
+
+        <section class="card form-section" id="status-section" aria-labelledby="sec-status" hidden>
+          <h3 id="sec-status">Availability</h3>
+          <p class="section-hint">Availability is a separate action from editing — it takes effect immediately and is not part of saving changes below.</p>
+          <div class="publish-panel">
+            <div class="state">
+              <span>Status: <span id="status-current"></span></span>
+              <span class="cell-sub" id="status-effective"></span>
+            </div>
+            <div class="table-actions" id="status-actions"></div>
+          </div>
+        </section>
+
+        <div class="action-bar">
+          <button class="btn btn-primary" id="save-btn" type="submit"><span class="spinner" aria-hidden="true"></span><span class="label">Create coupon</span></button>
+          <a href="coupons.html" class="btn btn-outline" id="cancel-link">Cancel</a>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/forms.js"></script>
+  <script src="../assets/js/dom.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/coupon-api.js"></script>
+  <script src="../assets/js/coupon-form.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lead details — The Night Club Super Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/auth.css" />
+  <link rel="stylesheet" href="../assets/css/courses.css" />
+  <link rel="stylesheet" href="../assets/css/coupons.css" />
+  <link rel="stylesheet" href="../assets/css/orders.css" />
+  <link rel="stylesheet" href="../assets/css/leads.css" />
+  <style>html.auth-pending body { visibility: hidden; }</style>
+  <script>document.documentElement.classList.add('auth-pending');</script>
+  <noscript><style>html.auth-pending body { visibility: visible; }</style></noscript>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">The <span>Night Club</span></div>
+      <nav aria-label="Admin modules">
+        <a href="../index.html">Dashboard</a>
+        <a href="courses.html">Courses</a>
+        <a href="categories.html">Categories</a>
+        <a href="instructors.html">Instructors</a>
+        <a href="students.html">Students</a>
+        <a href="enrollments.html">Enrollments</a>
+        <a href="orders.html">Orders</a>
+        <a href="leads.html" class="active" aria-current="page">Leads</a>
+        <span class="nav-disabled" aria-disabled="true">Payments</span>
+        <a href="coupons.html">Coupons</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="membership.html">1% Club</a>
+        <a href="placeholders.html">Placeholders</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <span></span>
+        <div class="topbar-right">
+          <span id="admin-identity" class="admin-identity"></span>
+          <span id="admin-role" class="badge badge-role"></span>
+          <button type="button" id="logout-btn" class="btn btn-outline btn-sm">Sign out</button>
+        </div>
+      </div>
+
+      <div class="page-head">
+        <h1 id="page-title">Lead</h1>
+        <div class="table-actions">
+          <a href="leads.html" class="btn btn-outline btn-sm">Back to leads</a>
+        </div>
+      </div>
+
+      <div id="page-alert" class="alert" role="alert" tabindex="-1" hidden></div>
+      <div id="load-state" class="state-box" hidden></div>
+
+      <div id="content" hidden>
+        <h3 class="lead-section-title">Contact information</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Name</dt><dd id="d-name"></dd></div>
+            <div class="detail-item"><dt>Email</dt><dd id="d-email"></dd></div>
+            <div class="detail-item"><dt>Phone</dt><dd id="d-phone"></dd></div>
+          </div>
+        </div>
+
+        <h3 class="lead-section-title">Enquiry information</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Enquiry Type</dt><dd id="d-enquiry-type"></dd></div>
+            <div class="detail-item"><dt>Subject</dt><dd id="d-subject"></dd></div>
+            <div class="detail-item"><dt>Course</dt><dd id="d-course"></dd></div>
+          </div>
+        </div>
+
+        <h3 class="lead-section-title">Message</h3>
+        <div class="card">
+          <p id="d-message" class="lead-message"></p>
+        </div>
+
+        <h3 class="lead-section-title">Lead management</h3>
+        <div class="card lead-edit-card">
+          <form id="edit-form">
+            <div class="form-row">
+              <div class="field">
+                <label for="f-status">Lead Status</label>
+                <select class="input" id="f-status" name="status">
+                  <option value="new">New</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="resolved">Resolved</option>
+                  <option value="spam">Spam</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="f-last-contacted">Last Contacted</label>
+                <input class="input" id="f-last-contacted" name="lastContactedAt" type="datetime-local" />
+                <button type="button" id="clear-last-contacted" class="btn btn-link" style="align-self: flex-start;">Clear</button>
+              </div>
+            </div>
+            <div class="field" style="margin-top: var(--space-4);">
+              <label for="f-admin-notes">Admin Notes</label>
+              <p class="field-internal-hint">Internal/admin-only — never shown to the student or visible on the public site.</p>
+              <textarea class="input" id="f-admin-notes" name="adminNotes" maxlength="2000" placeholder="Add internal notes about this enquiry..."></textarea>
+            </div>
+            <div class="lead-save-row">
+              <button type="submit" id="save-btn" class="btn btn-primary btn-sm">
+                <span class="spinner" aria-hidden="true"></span>
+                <span class="label">Save changes</span>
+              </button>
+              <span id="save-status" class="text-muted" style="font-size: var(--font-size-sm);"></span>
+            </div>
+          </form>
+        </div>
+
+        <h3 class="lead-section-title">Timestamps</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Created</dt><dd id="d-created"></dd></div>
+            <div class="detail-item"><dt>Last Updated</dt><dd id="d-updated"></dd></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/forms.js"></script>
+  <script src="../assets/js/dom.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/leads-api.js"></script>
+  <script src="../assets/js/lead-details.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enrollment details — The Night Club Super Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/auth.css" />
+  <link rel="stylesheet" href="../assets/css/courses.css" />
+  <link rel="stylesheet" href="../assets/css/coupons.css" />
+  <link rel="stylesheet" href="../assets/css/orders.css" />
+  <link rel="stylesheet" href="../assets/css/students.css" />
+  <style>html.auth-pending body { visibility: hidden; }</style>
+  <script>document.documentElement.classList.add('auth-pending');</script>
+  <noscript><style>html.auth-pending body { visibility: visible; }</style></noscript>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">The <span>Night Club</span></div>
+      <nav aria-label="Admin modules">
+        <a href="../index.html">Dashboard</a>
+        <a href="courses.html">Courses</a>
+        <a href="categories.html">Categories</a>
+        <a href="instructors.html">Instructors</a>
+        <a href="students.html">Students</a>
+        <a href="enrollments.html" class="active" aria-current="page">Enrollments</a>
+        <a href="orders.html">Orders</a>
+        <a href="leads.html">Leads</a>
+        <span class="nav-disabled" aria-disabled="true">Payments</span>
+        <a href="coupons.html">Coupons</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="membership.html">1% Club</a>
+        <a href="placeholders.html">Placeholders</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <span></span>
+        <div class="topbar-right">
+          <span id="admin-identity" class="admin-identity"></span>
+          <span id="admin-role" class="badge badge-role"></span>
+          <button type="button" id="logout-btn" class="btn btn-outline btn-sm">Sign out</button>
+        </div>
+      </div>
+
+      <div class="page-head">
+        <h1 id="page-title">Enrollment</h1>
+        <div class="table-actions">
+          <a href="enrollments.html" class="btn btn-outline btn-sm">Back to enrollments</a>
+        </div>
+      </div>
+
+      <div id="page-alert" class="alert" role="alert" tabindex="-1" hidden></div>
+      <div id="load-state" class="state-box" hidden></div>
+
+      <div id="content" hidden>
+        <h3 class="order-section-title">Enrollment</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Enrollment ID</dt><dd class="order-id" id="d-id"></dd></div>
+            <div class="detail-item"><dt>Status</dt><dd id="d-status"></dd></div>
+            <div class="detail-item"><dt>Enrolled at</dt><dd id="d-enrolled-at"></dd></div>
+            <div class="detail-item"><dt>Completed at</dt><dd id="d-completed-at"></dd></div>
+          </div>
+        </div>
+
+        <h3 class="order-section-title">Student</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Name</dt><dd id="d-student-name"></dd></div>
+            <div class="detail-item"><dt>Student ID</dt><dd id="d-student-id"></dd></div>
+            <div class="detail-item"><dt>Account status</dt><dd id="d-student-status"></dd></div>
+          </div>
+        </div>
+
+        <h3 class="order-section-title">Course</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Title</dt><dd id="d-course-title"></dd></div>
+            <div class="detail-item"><dt>Course ID</dt><dd id="d-course-id"></dd></div>
+            <div class="detail-item"><dt>Course status</dt><dd id="d-course-status"></dd></div>
+          </div>
+        </div>
+
+        <h3 class="order-section-title">Access</h3>
+        <div class="card">
+          <div class="detail-grid">
+            <div class="detail-item"><dt>Current access</dt><dd id="d-access-granted"></dd></div>
+            <div class="detail-item"><dt>Enrollment grants access</dt><dd id="d-enrollment-grants"></dd></div>
+            <div class="detail-item"><dt>Student account active</dt><dd id="d-account-active"></dd></div>
+            <div class="detail-item"><dt>Course currently public</dt><dd id="d-course-public"></dd></div>
+          </div>
+        </div>
+
+        <h3 class="order-section-title">Originating order</h3>
+        <div class="card">
+          <div id="d-order-link"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/forms.js"></script>
+  <script src="../assets/js/dom.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/enrollments-api.js"></script>
+  <script src="../assets/js/enrollment-details.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+/* ==========================================================================
+   THE NIGHT CLUB — Super Admin: Leads / Inquiry Management (Phase L4)
+   Tokens only (tokens.css); reuses .filters/.table/.state-box/.pager/.card/
+   .badge/.detail-grid/.field/.form-row/.modal from courses.css/coupons.css/
+   orders.css/base.css. No new design system introduced.
+   ========================================================================== */
+
+/* ---- List filters (search + status + enquiry type + reset, same shape as
+   orders.css .filters-orders / coupons.css .filters-coupons) ---- */
+.filters.filters-leads { grid-template-columns: 2fr repeat(2, 1fr) auto; align-items: center; }
+@media (max-width: 1100px) { .filters.filters-leads { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 720px) { .filters.filters-leads { grid-template-columns: 1fr; } }
+
+/* ---- Lead status badges — the REAL ContactMessage.status enum (new /
+   in-progress / resolved / spam), never an invented UI-only status. ---- */
+.badge-lead-new { background: var(--color-accent-50); color: var(--color-accent-700); }
+.badge-lead-in-progress { background: var(--color-warning-bg); color: var(--color-warning-text); }
+.badge-lead-resolved { background: var(--color-success-bg); color: var(--color-success-text); }
+.badge-lead-spam { background: var(--color-surface-sunken); color: var(--color-text-muted); }
+
+/* ---- Subject / message cells ---- */
+.lead-subject { font-weight: 600; color: var(--color-text); }
+.lead-email-link,
+.lead-phone-link { color: var(--color-accent-600); }
+
+/* ---- Lead details page ---- */
+.lead-section-title { margin: var(--space-6) 0 var(--space-3); }
+.lead-section-title:first-child { margin-top: 0; }
+
+/* Full enquiry message — plain text, pre-wrapped so it is never collapsed
+   to one line and never rendered as markup (set via textContent only). */
+.lead-message { white-space: pre-wrap; word-break: break-word; margin: 0; line-height: 1.6; }
+
+/* Internal/admin-only note on adminNotes — distinguishes it from the
+   read-only enquiry fields above it on the same page. */
+.field-internal-hint { color: var(--color-text-muted); font-size: 0.8125rem; margin: 0 0 var(--space-2); }
+
+/* Editable section vs read-only sections: a faint accent rule calls out
+   where admin-editable controls begin on the details page. */
+.lead-edit-card { border-color: var(--color-accent-300); }
+
+.lead-save-row { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-4); }
+
+@media (max-width: 720px) {
+  .detail-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,260 @@
+/* ==========================================================================
+   THE NIGHT CLUB — Super Admin: shared components + login page
+   This file is the de-facto shared component stylesheet (loaded on every
+   page): buttons, form controls, alerts and the guarded-shell/topbar rules
+   live here, plus the login-page-specific layout at the bottom. Uses ONLY
+   tokens from tokens.css. Mobile-first: base rules are the phone layout;
+   wider screens add to it.
+   ========================================================================== */
+
+.container { width: 100%; max-width: var(--max-width); margin: 0 auto; padding-left: var(--space-4); padding-right: var(--space-4); }
+
+/* ---- Header on the login page ---- */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-6);
+  gap: var(--space-4);
+}
+.brand {
+  font-weight: 800;
+  font-size: var(--font-size-xl);
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+.brand span { color: var(--color-accent-500); }
+.brand-tag {
+  display: inline-block;
+  margin-left: var(--space-2);
+  padding: 0.1rem 0.55rem;
+  border-radius: var(--radius-full);
+  background: var(--color-accent-50);
+  color: var(--color-accent-700);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+/* ---- Page shell ---- */
+.auth-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+  background: var(--color-bg);
+}
+
+/* Restrained ambient glows echoing the app shell, scaled for a single
+   focused card — decorative, inert, no horizontal overflow. */
+.auth-page::before,
+.auth-page::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.18;
+}
+.auth-page::before {
+  width: 38rem;
+  height: 38rem;
+  top: -16rem;
+  left: 50%;
+  transform: translateX(-62%);
+  background: var(--gradient-ambient-1);
+}
+.auth-page::after {
+  width: 30rem;
+  height: 30rem;
+  bottom: -14rem;
+  right: -8rem;
+  background: var(--gradient-ambient-3);
+}
+
+.auth-main {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-4) var(--space-4) var(--space-16);
+}
+.auth-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  background: var(--color-glass-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  padding: var(--space-6);
+}
+.auth-card h1 { font-size: var(--font-size-xl); margin-bottom: var(--space-2); }
+.auth-card .lead { color: var(--color-text-muted); margin-bottom: var(--space-6); }
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-page::before,
+  .auth-page::after { opacity: 0.12; }
+}
+
+/* ---- Form primitives ---- */
+.form-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+.field { display: flex; flex-direction: column; gap: var(--space-1); }
+.field label { font-weight: 600; font-size: var(--font-size-sm); color: var(--color-text); }
+
+.input {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  font: inherit;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard);
+  /* 16px minimum stops iOS Safari from zooming the page on focus */
+  font-size: 1rem;
+}
+.input:hover { border-color: var(--color-accent-300); }
+.input:focus {
+  outline: none;
+  border-color: var(--focus-ring-color);
+  box-shadow: var(--focus-ring);
+}
+.field.has-error .input { border-color: var(--color-error-text); box-shadow: 0 0 0 3px var(--color-error-bg); }
+.field-error { color: var(--color-error-text); font-size: 0.8125rem; margin: 0; min-height: 0; }
+
+/* Password field with show/hide toggle */
+.password-wrap { position: relative; }
+.password-wrap .input { padding-right: 4.25rem; }
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: var(--space-2);
+  transform: translateY(-50%);
+  background: none;
+  border: 0;
+  padding: var(--space-1) var(--space-2);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-accent-600);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+.toggle-password:hover { background: var(--color-accent-50); }
+.toggle-password:focus-visible { outline: 2px solid var(--color-accent-500); }
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  font: inherit;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard),
+              transform var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard);
+}
+
+/* Primary: gradient fill + accent glow shadow, lifts slightly on hover. */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: var(--color-text-on-accent);
+  box-shadow: var(--shadow-glow-sm);
+}
+.btn-primary:hover { background: var(--gradient-primary-hover); box-shadow: var(--shadow-glow); }
+.btn-primary:active { transform: translateY(1px); box-shadow: var(--shadow-glow-sm); }
+
+/* Secondary: solid neutral surface, for the second-priority action. */
+.btn-secondary { background: var(--color-surface-sunken); color: var(--color-text); border-color: var(--color-border); }
+.btn-secondary:hover { background: var(--color-border); }
+
+.btn-outline { background: transparent; color: var(--color-accent-700); border-color: var(--color-accent-300); }
+.btn-outline:hover { background: var(--color-accent-50); }
+
+.btn-ghost { background: transparent; color: var(--color-text-muted); border-color: transparent; }
+.btn-ghost:hover { background: var(--color-surface-alt); color: var(--color-text); }
+
+.btn-sm { padding: var(--space-2) var(--space-4); font-size: var(--font-size-sm); }
+.btn-block { width: 100%; }
+.btn:focus-visible { outline: 2px solid var(--focus-ring-color); outline-offset: 2px; }
+.btn[disabled] { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn .spinner {
+  width: 1em;
+  height: 1em;
+  margin-right: var(--space-2);
+  border: 2px solid var(--overlay-light-mid);
+  border-top-color: var(--color-white);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+.btn.is-loading .spinner { display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .btn-outline:hover { transform: translateY(-1px); }
+}
+
+/* ---- Alerts ---- */
+.alert {
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-4);
+  border: 1px solid transparent;
+}
+.alert[hidden] { display: none; }
+.alert:focus { outline: none; }
+.alert-error { background: var(--color-error-bg); border-color: var(--color-error-border); color: var(--color-error-text-strong); }
+.alert-info  { background: var(--color-surface-alt); border-color: var(--color-border); color: var(--color-text); }
+
+/* ---- Guarded shell: hidden until the SERVER confirms the session, so an
+        unauthenticated visitor never sees a flash of admin UI. ---- */
+html.auth-pending body { visibility: hidden; }
+
+/* Sidebar entries for modules that ship in later phases: visibly inert, and
+   not focusable, so nothing pretends to work that does not exist yet. */
+.sidebar nav .nav-disabled {
+  color: var(--color-text-faint);
+  cursor: not-allowed;
+  user-select: none;
+}
+.topbar-right { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+.admin-identity { color: var(--color-text-muted); font-size: var(--font-size-sm); }
+.badge-role {
+  background: var(--color-accent-50);
+  color: var(--color-accent-700);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+}
+
+@media (min-width: 640px) {
+  .auth-main { padding-top: var(--space-8); }
+  .auth-card { padding: var(--space-8); }
+}
+@media (max-width: 380px) {
+  .auth-card { padding: var(--space-4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn .spinner { animation-duration: 2s; }
+  .input, .btn { transition: none; }
+}

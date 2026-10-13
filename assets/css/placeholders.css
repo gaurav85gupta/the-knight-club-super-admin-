@@ -1,0 +1,147 @@
+/* ==========================================================================
+   THE KNIGHT CLUB — Super Admin: Placeholders (Central Placeholders System)
+   Tokens only (tokens.css). Reuses .card, .btn, .badge, .alert, .state-box,
+   .modal, and the video-* classes from membership.css and base.css.
+   Only adds styles specific to the Placeholders page layout.
+   ========================================================================== */
+
+/* ---- Topbar subtitle ---- */
+.topbar-subtitle {
+  font-size: var(--font-size-sm);
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.topbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* ---- Placeholder list ---- */
+#placeholders-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* ---- Placeholder card ---- */
+.placeholder-card {
+  padding: var(--space-6);
+}
+
+/* ---- Card header ---- */
+.placeholder-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.placeholder-card-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.placeholder-card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  margin: 0;
+}
+
+.placeholder-card-breadcrumb {
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+/* Machine-readable key badge */
+.placeholder-key-badge {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.75rem;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem 0.5rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 0.15rem;
+}
+
+/* ---- Status row ---- */
+.placeholder-status-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.placeholder-status-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Status badge variants */
+.badge-configured {
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.badge-not-configured {
+  background: var(--color-surface-alt);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+/* ---- Video status badge variants (mirrors lesson video colours) ---- */
+.badge-vs-none        { background: var(--color-surface-alt); color: var(--color-text-muted); border: 1px solid var(--color-border); }
+.badge-vs-uploading   { background: var(--color-info-bg); color: var(--color-info-text); }
+.badge-vs-processing  { background: var(--color-info-bg-soft); color: var(--color-info-text-soft); }
+.badge-vs-ready       { background: var(--color-success-bg); color: var(--color-success-text); }
+.badge-vs-failed      { background: var(--color-error-bg); color: var(--color-error-text); }
+
+/* ---- Video body divider ---- */
+.placeholder-video-body {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-5);
+}
+
+/* ---- Inline status message ---- */
+.placeholder-inline-status {
+  font-size: var(--font-size-sm);
+  min-height: 1.5rem;
+  margin: var(--space-2) 0 0;
+}
+
+.placeholder-inline-status-success { color: var(--color-success-text); }
+.placeholder-inline-status-error   { color: var(--color-error-text); }
+.placeholder-inline-status-info    { color: var(--color-text-muted); }
+
+/* ---- Upload label acts as a button ---- */
+.media-upload-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+/* ---- Screenreader-only helper (reused from courses) ---- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}

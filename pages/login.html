@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in — The Night Club Super Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <!-- Login is never cached by an intermediary or restored from bfcache with stale state. -->
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <link rel="stylesheet" href="../assets/css/tokens.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/auth.css" />
+</head>
+<body class="auth-page">
+
+  <header class="container site-header">
+    <span class="brand">The <span>Night Club</span> <small class="brand-tag">Super Admin</small></span>
+  </header>
+
+  <main class="auth-main">
+    <section class="auth-card" aria-labelledby="login-title">
+      <h1 id="login-title">Administrator sign in</h1>
+      <p class="lead">Restricted access. Sign in with your Admin ID and password.</p>
+
+      <div id="form-alert" class="alert" role="alert" tabindex="-1" hidden></div>
+
+      <!--
+        No action and no method on purpose: submission is handled in JS with
+        preventDefault(). If scripts ever fail to load, the browser has no
+        target to send credentials to, so they can never end up in a URL.
+      -->
+      <form id="login-form" novalidate autocomplete="off">
+        <div class="form-grid">
+
+          <div class="field">
+            <label for="adminId">Admin ID</label>
+            <input class="input" id="adminId" name="adminId" type="text" inputmode="text"
+                   autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"
+                   maxlength="100" required aria-describedby="adminId-error" />
+            <p class="field-error" id="adminId-error" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="password-wrap">
+              <input class="input" id="password" name="password" type="password"
+                     autocomplete="current-password" maxlength="128" required
+                     aria-describedby="password-error" />
+              <button type="button" class="toggle-password" aria-pressed="false" aria-label="Show or hide password">Show</button>
+            </div>
+            <p class="field-error" id="password-error" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <button class="btn btn-primary btn-block" id="submit-btn" type="submit">
+              <span class="spinner" aria-hidden="true"></span>
+              <span class="label">Sign in</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/forms.js"></script>
+  <script src="../assets/js/sound.js"></script>
+  <script src="../assets/js/login.js"></script>
+</body>
+</html>

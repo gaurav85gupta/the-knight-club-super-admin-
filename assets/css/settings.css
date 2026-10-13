@@ -1,0 +1,20 @@
+/* Settings page (sign-in sound preference). Small, page-scoped stylesheet —
+   mirrors the .checkbox-field pattern already used inside .editor-modal
+   (courses.css), just not modal-scoped, since Settings is a plain page. */
+
+.card h3 { margin-top: 0; }
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.checkbox-field input {
+  width: auto;
+}
+
+.checkbox-field label {
+  cursor: pointer;
+}
