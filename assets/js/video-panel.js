@@ -373,8 +373,14 @@ const VideoPanel = (() => {
           ])
         );
       } else {
-        // Bunny is working (or a closed tab left it mid-upload).
-        const uploadingElsewhere = cand.status === 'UPLOADING' || cand.status === 'INITIALIZING';
+        // Bunny is working (or a closed tab left it mid-upload/mid-processing).
+        // Discard must be offered for EVERY non-terminal status, not just
+        // UPLOADING/INITIALIZING — a candidate can just as easily get stuck at
+        // UPLOADED or PROCESSING (tab closed/refreshed after bytes finished but
+        // before Bunny confirmed Finished), and with no admin escape hatch that
+        // candidate permanently blocks any new upload for this lesson (the
+        // one-in-flight-candidate index rejects it).
+        const uploadingElsewhere = ['UPLOADING', 'INITIALIZING', 'UPLOADED', 'PROCESSING'].includes(cand.status);
         const indeterminate = Dom.el('div', { class: `progress ${cand.status === 'PROCESSING' && cand.encodeProgress ? '' : 'is-indeterminate'}`, role: 'progressbar', 'aria-label': 'Processing progress' }, [Dom.el('span')]);
         if (cand.status === 'PROCESSING' && cand.encodeProgress) {
           indeterminate.firstChild.style.width = `${cand.encodeProgress}%`;
